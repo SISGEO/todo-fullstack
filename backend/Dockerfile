@@ -1,42 +1,29 @@
 # syntax=docker/dockerfile:1.4
-FROM node:18-alpine AS builder
+FROM node:18-alpine
 
-# Add necessary packages
-RUN apk add --no-cache python3 make g++
+# Add necessary packages for node-gyp
+RUN apk add --no-cache python3 make g++ git
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files first for better caching
 COPY package*.json ./
 
-# Install dependencies with cache mount
-RUN --mount=type=cache,target=/root/.npm \
-    npm ci
+# Install dependencies
+RUN npm ci
 
-# Copy source files
+# Copy the rest of the code
 COPY . .
 
-# Build the application
+# Build TypeScript
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine AS runner
-
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install production dependencies only
-RUN --mount=type=cache,target=/root/.npm \
-    npm ci --only=production
-
-# Copy built files from builder
-COPY --from=builder /app/dist ./dist
+# Remove dev dependencies
+RUN npm prune --production
 
 # Set environment variables
-ENV NODE_ENV=production \
-    PORT=3333
+ENV NODE_ENV=production
+ENV PORT=3333
 
 # Expose port
 EXPOSE 3333
