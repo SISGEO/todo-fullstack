@@ -1,0 +1,10 @@
+.git
+.env
+.env.*
+node_modules
+*.sqlite
+*.sqlite3
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store 
