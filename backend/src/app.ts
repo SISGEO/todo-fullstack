@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import dataSource from './config/database';
 import todoRoutes from './routes/todo.routes';
+import authRoutes from './routes/auth.routes';
 import healthcheck from './healthcheck';
 
 class App {
@@ -27,11 +28,14 @@ class App {
             console.log('Data Source has been initialized!');
         } catch (error) {
             console.error('Error during Data Source initialization:', error);
+            // Não vamos encerrar o processo aqui para permitir que o healthcheck funcione
         }
     }
 
     private routes(): void {
-        this.express.use('/', healthcheck);
+        // Healthcheck deve vir primeiro para funcionar mesmo se o banco estiver com problemas
+        this.express.use(healthcheck);
+        this.express.use('/api/auth', authRoutes);
         this.express.use('/api/todos', todoRoutes);
     }
 }
