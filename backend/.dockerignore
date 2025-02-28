@@ -1,9 +1,49 @@
+# Dependency directories
 node_modules
-npm-debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
 dist
+build
+*.tsbuildinfo
+
+# Environment files
 .env
+.env.*
+
+# Version control
 .git
 .gitignore
-README.md
+
+# IDE files
+.idea
 .vscode
-*.sqlite 
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files
+coverage
+*.test.ts
+*.spec.ts
+
+# Database files
+*.sqlite
+*.sqlite3
+
+# Temporary files
+tmp
+temp
+*.tmp
+*.temp
+
+# Logs
+logs
+*.log
+
+README.md 
