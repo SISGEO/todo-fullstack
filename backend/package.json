@@ -8,11 +8,8 @@
   },
   "scripts": {
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules ./src/server.ts",
-    "clean": "rimraf dist",
-    "prebuild": "npm run clean",
     "build": "tsc",
     "start": "node dist/server.js",
-    "postinstall": "npm run build",
     "docker:build": "docker build -t todo-backend .",
     "docker:run": "docker run -p 3333:3333 todo-backend"
   },

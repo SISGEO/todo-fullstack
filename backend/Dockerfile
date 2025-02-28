@@ -1,24 +1,25 @@
 # syntax=docker/dockerfile:1.4
 FROM node:18-alpine
 
-# Add necessary packages for node-gyp
-RUN apk add --no-cache python3 make g++ git
+# Install build dependencies
+RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
 
-# Copy package files first for better caching
+# Copy package files
 COPY package*.json ./
+COPY tsconfig.json ./
 
-# Install dependencies
-RUN npm ci
+# Install all dependencies (including dev dependencies)
+RUN npm install
 
-# Copy the rest of the code
+# Copy source code
 COPY . .
 
-# Build TypeScript
+# Build TypeScript code
 RUN npm run build
 
-# Remove dev dependencies
+# Clean up dev dependencies
 RUN npm prune --production
 
 # Set environment variables

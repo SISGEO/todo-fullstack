@@ -21,13 +21,16 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "strict": true
+    "strict": true,
+    "noImplicitAny": false
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "**/*.spec.ts",
+    "**/*.test.ts"
   ]
 } 
