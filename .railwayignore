@@ -1,3 +1,13 @@
-# Ignore everything except backend
-/*
-!/backend/ 
+# Ignore frontend files
+/src
+/public
+/build
+/node_modules
+/*.json
+/*.js
+/*.md
+/*.config.js
+/*.env
+
+# Don't ignore backend
+!/backend 
