@@ -19,7 +19,11 @@ class App {
 
     private middlewares(): void {
         this.express.use(express.json());
-        this.express.use(cors());
+        this.express.use(cors({
+            origin: '*',
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+            allowedHeaders: ['Content-Type', 'Authorization']
+        }));
     }
 
     private async database(): Promise<void> {
@@ -37,6 +41,11 @@ class App {
         this.express.use(healthcheck);
         this.express.use('/api/auth', authRoutes);
         this.express.use('/api/todos', todoRoutes);
+
+        // Rota de teste para verificar se a API está funcionando
+        this.express.get('/', (req, res) => {
+            res.json({ message: 'Todo API is running!' });
+        });
     }
 }
 
